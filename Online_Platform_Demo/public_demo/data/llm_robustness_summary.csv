@@ -1,0 +1,9 @@
+﻿scenario_group,tau,analysis_type,n_runs,mean_best_weight,min_best_weight,mean_overlap_rate,min_overlap_rate,description,max_best_weight,mean_tech_strength_cv
+no_llm_ablation,,main_with_llm,1,11.41556411997624,11.41556411997624,1.0,1.0,主模型：使用Step1中LLM语义校验后的技术强度,,
+no_llm_ablation,,no_llm_ablation,1,10.687103282384683,10.687103282384683,0.8333333333333334,0.8333333333333334,tech_strength = hybrid_final_score_sum; LLM relevance/alignment removed,,
+llm_perturb,0.1,main_with_llm,1,11.41556411997624,11.41556411997624,1.0,1.0,主模型：使用Step1中LLM语义校验后的技术强度,,
+llm_perturb,0.1,llm_perturb,5,11.0735,10.8714,1.0,1.0,,11.3773,0.037
+llm_perturb,0.3,main_with_llm,1,11.41556411997624,11.41556411997624,1.0,1.0,主模型：使用Step1中LLM语义校验后的技术强度,,
+llm_perturb,0.3,llm_perturb,5,11.0826,10.8459,1.0,1.0,,11.3224,0.0324
+llm_perturb,0.5,main_with_llm,1,11.41556411997624,11.41556411997624,1.0,1.0,主模型：使用Step1中LLM语义校验后的技术强度,,
+llm_perturb,0.5,llm_perturb,5,11.0334,10.4429,1.0,1.0,,11.3801,0.0386
