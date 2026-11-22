@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Step6 Dual Mode V1.0.2 - unified local research and public demonstration application.
+"""Step6 Dual Mode V1.0.3 - unified local research and public demonstration application.
 
 Local mode orchestrates the existing Step1-Step5 scripts; public mode reuses the bundled experiment snapshot.
 Default behavior is result-first: discover and reuse valid local results; run a
@@ -43,7 +43,7 @@ except Exception as exc:  # pragma: no cover - handled in UI
 else:
     PLOTLY_IMPORT_ERROR = ""
 
-DUAL_MODE_VERSION = "1.0.2"
+DUAL_MODE_VERSION = "1.0.3"
 STREAMLIT_VERSION = getattr(st, "__version__", "unknown")
 
 try:
@@ -127,7 +127,7 @@ def dataframe_compat(data, *args, **kwargs):
 # App configuration and paths
 # -----------------------------------------------------------------------------
 st.set_page_config(
-    page_title="智能互联产品协同改进决策 | Step6",
+    page_title="Online demonstration platform",
     page_icon="◈",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -1630,8 +1630,8 @@ def network_figure(candidate: pd.DataFrame, selected: pd.DataFrame, mode: str = 
         cx.extend([pos[a][0], pos[b][0], None])
         cy.extend([pos[a][1], pos[b][1], None])
     if cx:
-        background_color = "rgba(151,166,181,0.48)" if mode == "优化网络" else "rgba(151,166,181,0.30)"
-        background_width = 1.35 if mode == "优化网络" else 1.15
+        background_color = "rgba(130,145,160,0.72)" if mode == "优化网络" else "rgba(151,166,181,0.30)"
+        background_width = 1.7 if mode == "优化网络" else 1.15
         fig.add_trace(go.Scatter(
             x=cx, y=cy, mode="lines",
             line=dict(color=background_color, width=background_width),
@@ -2182,7 +2182,7 @@ with st.sidebar:
     st.markdown("""
     <div class="paper-sidebar-brand">
       <div class="paper-brand-mark">E</div>
-      <div><div class="paper-brand-name">ECOSYSTEM</div><div class="paper-brand-sub">DECISION STUDIO</div></div>
+      <div><div class="paper-brand-name">Online demonstration</div><div class="paper-brand-sub">platform</div></div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -2464,11 +2464,11 @@ footer{visibility:hidden!important}
   font-size:27px;font-weight:800;
 }
 .paper-brand-name{
-  color:#F7FAFC;font-size:14px;font-weight:800;
-  letter-spacing:1.2px;line-height:1.15;
+  color:#F7FAFC;font-size:12px;font-weight:800;
+  letter-spacing:.1px;line-height:1.15;white-space:nowrap;
 }
 .paper-brand-sub{
-  color:#AAB8C8;font-size:9px;letter-spacing:1.3px;margin-top:4px;
+  color:#AAB8C8;font-size:9px;letter-spacing:.5px;margin-top:4px;
 }
 .paper-sidebar-rule{
   height:1px;background:rgba(255,255,255,.16);
@@ -2813,8 +2813,8 @@ hr{border-color:var(--paper-border)!important}
   font-size:10px!important;line-height:1.5!important;
 }
 
-/* Human-review network: heading and chart share one bounded card. */
-div[data-testid="stVerticalBlockBorderWrapper"]:has(.review-network-card-heading){
+/* Human-review network: one border is applied to the keyed outer container only. */
+.st-key-review_network_outer{
   width:100%!important;max-width:100%!important;min-width:0!important;
   box-sizing:border-box!important;overflow:hidden!important;
   background:#FFFFFF!important;border:1px solid #E4E7EC!important;
@@ -2824,18 +2824,22 @@ div[data-testid="stVerticalBlockBorderWrapper"]:has(.review-network-card-heading
   width:100%!important;max-width:100%!important;min-width:0!important;
   box-sizing:border-box!important;margin:0 0 3px!important;
 }
-div[data-testid="stVerticalBlockBorderWrapper"]:has(.review-network-card-heading)
-[data-testid="stPlotlyChart"],
-div[data-testid="stVerticalBlockBorderWrapper"]:has(.review-network-card-heading)
-[data-testid="stPlotlyChart"] *{
-  box-sizing:border-box!important;
-  border:0!important;outline:0!important;box-shadow:none!important;
-}
-div[data-testid="stVerticalBlockBorderWrapper"]:has(.review-network-card-heading)
-[data-testid="stPlotlyChart"]{
+.st-key-review_network_outer [data-testid="stPlotlyChart"]{
   width:100%!important;max-width:100%!important;min-width:0!important;
-  overflow:hidden!important;background:transparent!important;
-  border-radius:0!important;padding:0!important;margin:2px 0 0!important;
+  box-sizing:border-box!important;overflow:hidden!important;
+  background:transparent!important;border:0!important;outline:0!important;
+  box-shadow:none!important;border-radius:0!important;padding:0!important;
+  margin:2px 0 0!important;
+}
+.st-key-review_network_outer [data-testid="stPlotlyChart"] *{
+  box-sizing:border-box!important;border:0!important;outline:0!important;
+  box-shadow:none!important;
+}
+.st-key-review_network_outer [data-testid="stPlotlyChart"] > div,
+.st-key-review_network_outer [data-testid="stPlotlyChart"] .js-plotly-plot,
+.st-key-review_network_outer [data-testid="stPlotlyChart"] .plot-container,
+.st-key-review_network_outer [data-testid="stPlotlyChart"] .svg-container{
+  max-width:100%!important;box-sizing:border-box!important;
 }
 div[data-testid="stPlotlyChart"]{
   width:100%!important;max-width:100%!important;min-width:0!important;
@@ -3150,7 +3154,7 @@ elif page == "人机评审":
         with left_panel:
             # The Streamlit container supplies the single outer frame. The
             # Plotly canvas is borderless and constrained to this container.
-            with st.container(border=True):
+            with st.container(key="review_network_outer"):
                 st.markdown(
                     '<div class="review-network-card-heading">'
                     '<div class="review-panel-title">当前优先协同改进网络</div>'
